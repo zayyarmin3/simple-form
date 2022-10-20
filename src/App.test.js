@@ -76,25 +76,36 @@ describe('App', () => {
         const lastNameInput = getLastName();
         const smallDescriptionInput = getSmallDescription();
         const emailInput = getEmail();
+        const saveBtn = getSaveBtn();
 
         await userEvent.type(firstNameInput,'j');
         await userEvent.keyboard('[Backspace]')
         expect(screen.getByText('First Name is Required')).toBeInTheDocument();
 
+        expect(saveBtn).toBeDisabled();
+
         await userEvent.type(lastNameInput,'d');
         await userEvent.keyboard('[Backspace]')
         expect(screen.getByText('Last Name is Required')).toBeInTheDocument();
+
+        expect(saveBtn).toBeDisabled();
 
         await userEvent.type(smallDescriptionInput,'s');
         await userEvent.keyboard('[Backspace]')
         expect(screen.getByText('Small Description is Required')).toBeInTheDocument();
 
+        expect(saveBtn).toBeDisabled();
+
         await userEvent.type(emailInput,'j');
         expect(screen.getByText('Please enter valid email')).toBeInTheDocument();
         
+        expect(saveBtn).toBeDisabled();
+
         await userEvent.type(emailInput,'j');
         await userEvent.keyboard('[Backspace][Backspace]')
         expect(screen.getByText('Email is Required')).toBeInTheDocument();
+
+        expect(saveBtn).toBeDisabled();
       })
 
       it("Uploads the image", async () => {
